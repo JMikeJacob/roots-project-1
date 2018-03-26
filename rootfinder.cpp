@@ -4,8 +4,7 @@
 #include <iomanip>
 using namespace std;
 
-double horners(double poly[], complex<double> roots[], int order)
-{
+double horners(complex<double> poly[], complex<double> roots[], int order){
     int n = order;
     complex<double> result;
     for(int j=0; j<order; j++){
