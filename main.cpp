@@ -37,7 +37,7 @@ int main(int argc, char** argv)
 {
 	polynomial Poly;
 	rootfinder Groot;
-	
+	string fileName;
 	double array[4] = {1,3,3,1};
 	Poly.createPoly(3, array);
 	Poly.printPoly();
@@ -51,7 +51,6 @@ int main(int argc, char** argv)
 	}
 	Groot.printRoots();
 	Poly.deletePoly();
-	 string fileName;
     if (argc==2)
     {
         fileName=argv[1];
