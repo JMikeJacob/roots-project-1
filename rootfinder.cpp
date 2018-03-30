@@ -2,8 +2,15 @@
 #include <iomanip>
 #include <iostream>
 #include <complex>
+#include <stdlib.h>
 
 using namespace std;
+
+double absol(double num)
+{
+  return num * ((num>0) - (num<0));
+}
+
 void rootfinder::setup_finder(int order, double* poly)
 {
 	power = order;
@@ -12,7 +19,6 @@ void rootfinder::setup_finder(int order, double* poly)
 	{
 		factors[i] = poly[i];
 	}
-
 }
 
 void rootfinder::bairstow(int n)
@@ -28,7 +34,8 @@ void rootfinder::bairstow(int n)
 	
 	while(absol(dr) + absol(ds) > epsilon)
 	{
-				if ((iter % 200) == 0) {
+		if ((iter % 200) == 0)
+		{
 			r=(double)rand()/16000.;
 		}
 		if(iter % 500 == 0)
@@ -88,6 +95,7 @@ void rootfinder::horner(double* poly, int order)
         }
         cout << setprecision(5) << scientific;
         cout << "f" << roots[j] << " = " << result << endl;
+        cout << resetiosflags(ios_base::showbase);
     }
 }
 

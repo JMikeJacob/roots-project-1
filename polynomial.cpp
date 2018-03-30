@@ -12,14 +12,36 @@ void polynomial::createPoly(int n, double* inputArr)
 	}
 }
 
+void polynomial::normalizePoly()
+{
+	double divisor = coef[0];
+	coef[0] = 1.0;
+	for(int i = 1; i <= order; i++)
+	{
+		coef[i] /= divisor;
+	}
+}
+
 void polynomial::printPoly()
 {
 	if(coef != NULL)
 	{
-		for(int i = order; i >= 0; i--)
+		cout << scientific << setprecision(5);
+		cout << "Polynomial:" << endl; 
+		for(int i = 0; i <= order; i++)
 		{
-			cout << coef[i] << "x^" << 	i << endl;
-		}	
+			cout << " ";
+			if(i == 0 && coef[0] >= 0)
+			{
+			  cout << " ";
+			}
+			if(i != 0 && coef[i] >= 0)
+			{
+				cout << "+";
+			}
+			cout << coef[i] << " x^" << order-i << endl;
+		}
+		cout << resetiosflags(ios::showbase);
 	}
 }
 
