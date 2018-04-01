@@ -4,7 +4,6 @@
 #include <complex>
 #include <cmath>
 
-using namespace std;
-
 double absv(double); //absolute value function
-void printDouble(ostream&, double, int); //prints doubles w/ specified sigfigs
+void printDouble(std::ostream&, double, int); 
+//prints doubles w/ specified sigfigs
