@@ -40,47 +40,43 @@ void getpoly(string fileName, polynomial& Poly)
 
 int main(int argc, char** argv) 
 {
-	polynomial Poly;
-	rootfinder Groot;
-	string fileName;
-	//file reader: user input
-	if (argc == 2)
+  polynomial Poly;
+  rootfinder Groot;
+  string fileName;
+  //file reader: user input
+  if (argc == 2)
   {
-      fileName=argv[1];
+    fileName=argv[1];
   }
   else if(argc == 1)
   {
-      cout<<"Filename:";
-      cin>> fileName;
+    cout<<"Filename:";
+    cin >> fileName;
   }
   else
   {
-      cout<< "Invalid input. Program name with or w/o file only.";
-      return 0;
+    cout<< "Invalid input. Program name with or w/o file only.";
+    return 0;
   }
   if(fileName.find(".txt") == string::npos)
   {
-      fileName = fileName + ".txt";
+    fileName = fileName + ".txt";
   }
   getpoly(fileName, Poly);
   if(g_fileExists == false)
   {
-  	return 0;
-	}
+    return 0;
+  }
   Poly.normalizePoly();
-	Groot.setup_finder(Poly.order, Poly.coef);
-	cout <<  endl;
-	int n = Poly.order;
-	while(n > 2)
-	{
-		Groot.bairstow(n);
-		n -= 2;
-	}
-	Groot.extractRoots();
-	Groot.printRoots();
-	Groot.horner(Poly.coef, Poly.order);
-	Poly.deletePoly();
-  
-	
-	return 0;
+  Groot.setup_finder(Poly.order, Poly.coef);
+  cout <<  endl;
+  int n = Poly.order;
+  while(n > 2)
+  {
+    Groot.bairstow(n);
+    n -= 2;
+  }
+  Groot.printRoots();
+  Poly.deletePoly();
+  return 0;
 }
