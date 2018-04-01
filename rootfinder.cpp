@@ -6,7 +6,7 @@
 
 using namespace std;
 
-double absol(double num)
+double absv(double num)
 {
   return num * ((num>0) - (num<0));
 }
@@ -37,7 +37,7 @@ void rootfinder::bairstow(int n)
 	
 	b[0] = c[0] = 1;
 	
-	while(absol(dr) + absol(ds) > epsilon)
+	while(absv(dr) + absv(ds) > epsilon)
 	{
 		if ((iter % 200) == 0)
 		{
@@ -62,7 +62,7 @@ void rootfinder::bairstow(int n)
 		dr = b[n] * c[n-3] - b[n-1] * c[n-2];
 		ds = b[n-1] * c[n-1] - b[n] * c[n-2];
 		
-		if(absol(d) < 1e-16)
+		if(absv(d) < 1e-16)
 		{
 			d = 1.0;
 			dr = 1.0;
@@ -76,13 +76,11 @@ void rootfinder::bairstow(int n)
 		s += ds;
 		iter++;
 	}
-	cout << n << " : ";
+	
 	for(int i = 0; i < n-1; i++)
 	{ //quotient
 		factors[i] = b[i];
-		cout << factors[i] << " ";
 	}
-	cout << endl;
 	//x^2 + rx + s
 	factors[n] = s;
 	factors[n-1] = r;
@@ -91,32 +89,38 @@ void rootfinder::bairstow(int n)
 	delete [] c;
 }
 
+void rootfinder::quadratic(double b, double c, complex<double>& root1, 
+                           complex<double>& root2)
+{
+	double epsilon = 1e-6;
+	double disc = b*b - 4.0*c;
+	if (absv(disc) < epsilon)
+	{
+		root1 = complex<double>(-b/2.0, 0.0);
+		root2 = complex<double>(-b/2.0, 0.0);
+		return;
+	}
+	
+	if (disc > 0)
+	{
+		root1 = complex<double>((-b + sqrt(disc))/2.0, 0.0);
+		root2 = complex<double>((-b - sqrt(disc))/2.0, 0.0);
+		return;
+	}
+	
+	if (disc < 0)
+	{
+		root1 = complex<double>(-b/2.0,  sqrt(-disc)/2.0);
+		root2 = complex<double>(-b/2.0, -sqrt(-disc)/2.0);
+		return;
+	}
+}
+
 void rootfinder::extractRoots()
 {
-	double disc = 0.0;
-	double epsilon = 1e-6;
-	if(factors[2]*factors[2] - 4.0*factors[3] < epsilon)
+	for(int i = power; i >= 2; i-=2)
 	{
-		disc = 0.0;
-	}
-	else
-	{
-		disc = factors[2]*factors[2] - 4.0*factors[3]; 
-	}
-		cout << "!!!" << factors[1] << " " << factors[2] <<  " " << factors[3] << endl;
-		cout << "??" << (-factors[2] + sqrt(disc))/2.0 << endl;
-		for(int i = power; i >= 2; i-=2)
-		{
-			if(factors[i-1]*factors[i-1] - 4.0*factors[i] < epsilon)
-			{
-				disc = 0.0;
-			}
-			else
-			{
-				disc = factors[i-1]*factors[i-1] - 4.0*factors[i]; 
-			}
-		roots[i - 1] = complex<double>((-factors[i-1] + sqrt(disc))/2.0,0.0);
-		roots[i - 2] = complex<double>((-factors[i-1] - sqrt(disc))/2.0,0.0);
+	  quadratic(factors[i-1], factors[i], roots[i-1], roots[i-2]);
 	}
 	if(power % 2 == 1)
 	{
@@ -126,8 +130,9 @@ void rootfinder::extractRoots()
 
 void rootfinder::horner(double* poly, int order)
 {
-    complex<double> result;
-    double epsilon = 1e-15;
+    complex<double> result, tmp;
+    double eps = 1e-9;
+    cout << "Evaluating polynomial at identified roots:" << endl;
     for(int j = 0; j < order; j++)
     {
         result = complex<double>(poly[0], 0.0);
@@ -135,6 +140,19 @@ void rootfinder::horner(double* poly, int order)
         {
             result = result*roots[j] + complex<double>(poly[i], 0.0);
         }
+        tmp = result;
+        if(absv(result.real()) < eps && absv(result.imag()) < eps)
+        {
+        	result = complex<double>(0.0, 0.0);
+				}
+				else if(absv(result.real()) < eps)
+				{
+				  result = complex<double>(0.0, tmp.imag());
+				}
+				else if(absv(result.imag()) < eps)
+				{
+					result = complex<double>(tmp.real(), 0.0);
+				}
         cout << "f" << roots[j] << " = " << result << endl;
         cout << resetiosflags(ios_base::showbase);
     }
@@ -142,8 +160,10 @@ void rootfinder::horner(double* poly, int order)
 
 void rootfinder::printRoots()
 {
+	cout << "Roots: " << endl;
 	for(int i = 0; i < power; i++)
 	{
 		cout << roots[i] << endl;
 	}
+	cout << endl;
 }
