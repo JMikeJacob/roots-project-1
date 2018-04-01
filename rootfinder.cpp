@@ -167,13 +167,13 @@ void rootfinder::horner(double* poly, int order)
 				}
 				//prints both root and result with specified sigfigs (6S)
         cout << "  f" << "(";
-				printDouble(roots[j].real(), 5);
+				printDouble(cout, roots[j].real(), 5);
 				cout << ",";
-				printDouble(roots[j].imag(), 5);
+				printDouble(cout, roots[j].imag(), 5);
 				cout << ") = (";
-				printDouble(result.real(), 5);
+				printDouble(cout, result.real(), 5);
 				cout << ",";
-				printDouble(result.imag(), 5);
+				printDouble(cout, result.imag(), 5);
         cout << ")" << endl;
         
         evals[j] = result;//stores result in array for saving to file
@@ -186,9 +186,9 @@ void rootfinder::printRoots()
 	for(int i = 0; i < power; i++)
 	{
 		cout << "  (";
-		printDouble(roots[i].real(), 5);
+		printDouble(cout, roots[i].real(), 5);
 		cout << ",";
-		printDouble(roots[i].imag(), 5);
+		printDouble(cout, roots[i].imag(), 5);
 		cout << ")" << endl;
 	}
 	cout << endl;

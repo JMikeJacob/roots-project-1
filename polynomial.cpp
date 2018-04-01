@@ -34,7 +34,7 @@ void polynomial::printPoly()
 		for(int i = 0; i <= order; i++)
 		{
 			cout << "  ";
-			printDouble(coef[i], 5);//prints coef w/ 6 sigfigs
+			printDouble(cout, coef[i], 5);//prints coef w/ 6 sigfigs
 			cout << " x^" << order-i << endl;
 		}
 	}
