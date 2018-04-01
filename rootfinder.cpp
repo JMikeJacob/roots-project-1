@@ -15,9 +15,14 @@ void rootfinder::setup_finder(int order, double* poly)
 {
 	power = order;
 	factors = new double[order+1];
+	roots = new complex<double>[order];
 	for(int i = 0; i < order+1; i++)
 	{
 		factors[i] = poly[i];
+		if(i < order)
+		{
+			roots[i] = complex<double>(0.0, 0.0);
+		}
 	}
 }
 
@@ -71,29 +76,65 @@ void rootfinder::bairstow(int n)
 		s += ds;
 		iter++;
 	}
-	
+	cout << n << " : ";
 	for(int i = 0; i < n-1; i++)
-	{ 
+	{ //quotient
 		factors[i] = b[i];
+		cout << factors[i] << " ";
 	}
+	cout << endl;
+	//x^2 + rx + s
 	factors[n] = s;
 	factors[n-1] = r;
-	
+
 	delete [] b;
 	delete [] c;
+}
+
+void rootfinder::extractRoots()
+{
+	double disc = 0.0;
+	double epsilon = 1e-6;
+	if(factors[2]*factors[2] - 4.0*factors[3] < epsilon)
+	{
+		disc = 0.0;
+	}
+	else
+	{
+		disc = factors[2]*factors[2] - 4.0*factors[3]; 
+	}
+		cout << "!!!" << factors[1] << " " << factors[2] <<  " " << factors[3] << endl;
+		cout << "??" << (-factors[2] + sqrt(disc))/2.0 << endl;
+		for(int i = power; i >= 2; i-=2)
+		{
+			if(factors[i-1]*factors[i-1] - 4.0*factors[i] < epsilon)
+			{
+				disc = 0.0;
+			}
+			else
+			{
+				disc = factors[i-1]*factors[i-1] - 4.0*factors[i]; 
+			}
+		roots[i - 1] = complex<double>((-factors[i-1] + sqrt(disc))/2.0,0.0);
+		roots[i - 2] = complex<double>((-factors[i-1] - sqrt(disc))/2.0,0.0);
+	}
+	if(power % 2 == 1)
+	{
+		roots[0] = -factors[1];
+	}
 }
 
 void rootfinder::horner(double* poly, int order)
 {
     complex<double> result;
+    double epsilon = 1e-15;
     for(int j = 0; j < order; j++)
     {
-        result = poly[order];
-        for (int i = order-1; i >= 0; --i)
+        result = complex<double>(poly[0], 0.0);
+        for (int i = 1; i <= order; ++i)
         {
-            result = result*roots[j] + poly[i];
+            result = result*roots[j] + complex<double>(poly[i], 0.0);
         }
-        cout << setprecision(5) << scientific;
         cout << "f" << roots[j] << " = " << result << endl;
         cout << resetiosflags(ios_base::showbase);
     }
@@ -101,12 +142,8 @@ void rootfinder::horner(double* poly, int order)
 
 void rootfinder::printRoots()
 {
-	for(int i = power; i >= 2; i-= 2)
+	for(int i = 0; i < power; i++)
 	{
-		cout << "x^2 + " << factors[i-1] << "x + " << factors[i] << endl;
-	}
-	if(power%2 == 1)
-	{
-		cout << "x + " << factors[1]; 
+		cout << roots[i] << endl;
 	}
 }

@@ -76,7 +76,9 @@ int main(int argc, char** argv)
 		Groot.bairstow(n);
 		n -= 2;
 	}
+	Groot.extractRoots();
 	Groot.printRoots();
+	Groot.horner(Poly.coef, Poly.order);
 	Poly.deletePoly();
   
 	

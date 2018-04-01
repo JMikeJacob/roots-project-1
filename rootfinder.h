@@ -1,4 +1,5 @@
 #include <complex>
+#include <cmath>
 
 using namespace std;
 
@@ -13,7 +14,8 @@ class rootfinder
 	public:
 		void setup_finder(int order, double* poly);
 		void bairstow(int n);
-		void quadratic(complex<double>* roots);
+		void quadratic(double b, double c);
+		void extractRoots();
 		void printRoots();
 		void horner(double* poly, int order);
 };
