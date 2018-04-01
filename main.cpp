@@ -3,6 +3,8 @@
 #include <string>
 #include "polynomial.h"
 #include "rootfinder.h"
+#include "misc_functions.h"
+#include <cstring>
 
 using namespace std;
 
@@ -35,12 +37,68 @@ void getpoly(string fileName, polynomial& Poly)
   delete [] polyArray;//deallocates memory of dynamic array
   polyFile.close();
 }
-
+void doubleToFile (string fileName, polynomial Poly, rootfinder Groot)
+  {
+	fileName = fileName + ".txt";
+	char * cfileName = new char [fileName.length()+1];
+  	strcpy (cfileName, fileName.c_str());
+  	
+  	int set;
+  	cout << "How many significant figures?" << endl;
+  	cin >> set;
+  	
+	ofstream textFile;
+	
+	textFile.open(cfileName);
+	
+	for(int i = 0; i <= Poly.order; i++)
+ 	{
+		printDouble(textFile, Poly.coef[i], set);
+		textFile << endl;
+	}
+	textFile << endl;
+	
+	for(int i = 0; i < Groot.power ; i++)
+	{
+	  textFile << "  (";
+	  printDouble(textFile, Groot.roots[i].real(), set);
+	  textFile << ",";
+	  printDouble(textFile, Groot.roots[i].imag(), set);
+	  textFile << ")" << endl;
+	}
+	textFile << endl;
+	
+	for(int i = 0; i < Groot.power ; i++)
+	{
+	  textFile << "  (";
+	  printDouble(textFile, Groot.evals[i].real(), set);
+	  textFile << ",";
+	  printDouble(textFile, Groot.evals[i].imag(), set);
+	  textFile << ")" << endl;
+	}
+	textFile << endl;
+	
+	for(int i=0; i < Groot.power ; i++  )
+	{
+		textFile << "  f" << "(";
+	    printDouble(textFile, Groot.roots[i].real(), set);
+	    textFile << ",";
+	    printDouble(textFile, Groot.roots[i].imag(), set);
+	    textFile << ") = (";
+	    printDouble(textFile, Groot.evals[i].real(), set);
+	    textFile << ",";
+	    printDouble(textFile, Groot.evals[i].imag(), set);
+	    textFile << ")" << endl;
+	}
+	
+	textFile.close();
+}
+	
 int main(int argc, char** argv) 
 {
   polynomial Poly;
   rootfinder Groot;
-  string fileName;
+  string fileName, save;
   //file reader: user input
   if (argc == 2)
   {//case 1: file name declared along cmd line
@@ -79,6 +137,9 @@ int main(int argc, char** argv)
   Groot.printRoots();
   Groot.horner(Poly.coef, Poly.order);//evaluates roots in polynomial
   //deallocates memory of dynamic arrays
+  cout << "Name of save file: " << endl;
+  cin >> save;
+  doubleToFile(save,Poly,Groot);
   Poly.deletePoly();
   Groot.deleteFinder();
   return 0;

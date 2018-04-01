@@ -1,5 +1,8 @@
 #include "polynomial.h"
 #include "misc_functions.h"
+#include <string>
+#include <cstring>
+#include <fstream>
 
 using namespace std;
 
@@ -39,6 +42,8 @@ void polynomial::printPoly()
     }
   }
 }
+
+	
 
 void polynomial::deletePoly()
 {//deallocates memory occupied by coef array
