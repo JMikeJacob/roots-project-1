@@ -13,6 +13,7 @@ class rootfinder
 		double* factors;
 		double* quotient;
 		complex<double>* roots;
+		complex<double>* evals;
 	public:
 		void setup_finder(int order, double* poly);
 		void bairstow(int n);

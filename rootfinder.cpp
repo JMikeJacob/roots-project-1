@@ -8,12 +8,14 @@ void rootfinder::setup_finder(int order, double* poly)
 	power = order;
 	factors = new double[order+1];
 	roots = new complex<double>[order];
+	evals = new complex<double>[order];
 	for(int i = 0; i < order+1; i++)
 	{
 		factors[i] = poly[i];
 		if(i < order)
 		{
 			roots[i] = complex<double>(0.0, 0.0);
+			evals[i] = complex<double>(0.0, 0.0);
 		}
 	}
 }
@@ -122,7 +124,7 @@ void rootfinder::extractRoots()
 
 void rootfinder::horner(double* poly, int order)
 {
-    complex<double> result, tmp;
+    complex<double> result;
     double eps = 1e-9;
     cout << " Evaluating polynomial at identified roots:" << endl;
     for(int j = 0; j < order; j++)
@@ -132,18 +134,17 @@ void rootfinder::horner(double* poly, int order)
         {
             result = result*roots[j] + complex<double>(poly[i], 0.0);
         }
-        tmp = result;
         if(absv(result.real()) < eps && absv(result.imag()) < eps)
         {
         	result = complex<double>(0.0, 0.0);
 				}
 				else if(absv(result.real()) < eps)
 				{
-				  result = complex<double>(0.0, tmp.imag());
+				  result = complex<double>(0.0, result.imag());
 				}
 				else if(absv(result.imag()) < eps)
 				{
-					result = complex<double>(tmp.real(), 0.0);
+					result = complex<double>(result.real(), 0.0);
 				}
         cout << "  f" << "(";
 				printDouble(roots[j].real(), 5);
@@ -154,6 +155,8 @@ void rootfinder::horner(double* poly, int order)
 				cout << ",";
 				printDouble(result.imag(), 5);
         cout << ")" << endl;
+        
+        evals[j] = result;
     }
 }
 
