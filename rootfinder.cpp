@@ -1,15 +1,7 @@
 #include "rootfinder.h"
-#include <iomanip>
-#include <iostream>
-#include <complex>
-#include <stdlib.h>
+#include "misc_functions.h"
 
 using namespace std;
-
-double absv(double num)
-{
-  return num * ((num>0) - (num<0));
-}
 
 void rootfinder::setup_finder(int order, double* poly)
 {
@@ -132,7 +124,7 @@ void rootfinder::horner(double* poly, int order)
 {
     complex<double> result, tmp;
     double eps = 1e-9;
-    cout << "Evaluating polynomial at identified roots:" << endl;
+    cout << " Evaluating polynomial at identified roots:" << endl;
     for(int j = 0; j < order; j++)
     {
         result = complex<double>(poly[0], 0.0);
@@ -153,17 +145,28 @@ void rootfinder::horner(double* poly, int order)
 				{
 					result = complex<double>(tmp.real(), 0.0);
 				}
-        cout << "f" << roots[j] << " = " << result << endl;
-        cout << resetiosflags(ios_base::showbase);
+        cout << "  f" << "(";
+				printDouble(roots[j].real(), 5);
+				cout << ",";
+				printDouble(roots[j].imag(), 5);
+				cout << ") = (";
+				printDouble(result.real(), 5);
+				cout << ",";
+				printDouble(result.imag(), 5);
+        cout << ")" << endl;
     }
 }
 
 void rootfinder::printRoots()
 {
-	cout << "Roots: " << endl;
+	cout << " Roots: " << endl;
 	for(int i = 0; i < power; i++)
 	{
-		cout << roots[i] << endl;
+		cout << "  (";
+		printDouble(roots[i].real(), 5);
+		cout << ",";
+		printDouble(roots[i].imag(), 5);
+		cout << ")" << endl;
 	}
 	cout << endl;
 }

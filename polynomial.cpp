@@ -1,4 +1,5 @@
 #include "polynomial.h"
+#include "misc_functions.h"
 
 using namespace std;
 
@@ -26,20 +27,12 @@ void polynomial::printPoly()
 {
 	if(coef != NULL)
 	{
-		cout << scientific << setprecision(5);
-		cout << "Polynomial:" << endl; 
+		cout << " Polynomial:" << endl; 
 		for(int i = 0; i <= order; i++)
 		{
-			cout << " ";
-			if(i == 0 && coef[0] >= 0)
-			{
-			  cout << " ";
-			}
-			if(i != 0 && coef[i] >= 0)
-			{
-				cout << "+";
-			}
-			cout << coef[i] << " x^" << order-i << endl;
+			cout << "  ";
+			printDouble(coef[i], 5);
+			cout << " x^" << order-i << endl;
 		}
 		cout << resetiosflags(ios::showbase);
 	}

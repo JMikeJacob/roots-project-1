@@ -1,11 +1,10 @@
 #include <iostream>
 #include <iomanip>
 #include <complex>
-#include "polynomial.h"
-#include "rootfinder.h"
-#include <stdlib.h> //will find a way for rng soon
 #include <fstream>
 #include <string>
+#include "polynomial.h"
+#include "rootfinder.h"
 
 using namespace std;
 
@@ -26,6 +25,7 @@ void getpoly(string fileName, polynomial& Poly)
     g_fileExists = false;
     return;
   }
+  cout << endl;
   polyFile >> order;
 	double* polyArray = new double[order + 1];
   for(int i = 0; i <= order; i++)
