@@ -3,5 +3,5 @@
 #include <complex>
 #include <cmath>
 
-double absv(double);
-void printDouble(double, int);
+double absv(double); //absolute value function
+void printDouble(double, int); //prints doubles w/ specified sigfigs
