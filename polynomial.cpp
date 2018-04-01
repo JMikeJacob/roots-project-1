@@ -34,7 +34,6 @@ void polynomial::printPoly()
 			printDouble(coef[i], 5);
 			cout << " x^" << order-i << endl;
 		}
-		cout << resetiosflags(ios::showbase);
 	}
 }
 
