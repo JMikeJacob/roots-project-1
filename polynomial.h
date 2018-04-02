@@ -1,9 +1,9 @@
+#ifndef POLYMONIAL_H
+#define POLYMONIAL_H
 #include <iostream>
 #include <complex>
 #include <cmath>
 #include "rootfinder.h"
-#ifndef POLYFINDER_H
-#define POLYFINDER_H
 
 using namespace std;
 

@@ -162,6 +162,7 @@ void rootfinder::horner(double* poly, int order)
     {
       result = complex<double>(result.real(), 0.0);
     }
+    
     //prints both root and result with specified sigfigs (6S)
     cout << "  f" << "(";
     printDouble(cout, roots[j].real(), 5);

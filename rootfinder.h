@@ -1,9 +1,9 @@
+#ifndef ROOTFINDER_H
+#define ROOTFINDER_H
 #include <iostream>
 #include <complex>
 #include <cmath>
 #include <stdlib.h>
-#ifndef ROOTFINDER_H
-#define ROOTFINDER_H
 
 #define guess 0.0 //defines guess value for r and s
 
