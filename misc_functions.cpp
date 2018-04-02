@@ -9,8 +9,11 @@ double absv(double num) //absolute value function
   return num * ((num>0) - (num<0));
 }
 
-void printDouble(ostream& out, double num, int set)//prints doubles based on sigfigs
+void printDouble(ostream& out, double num, int set)
 {//varies iostream flags to print out a double with specified accuracy
+ //ostream& allows the function to either print the double (with cout)
+ //or save it in the file (with ofstream) depending on what 
+ //output stream is passed
   if(num == 0.0)
   {//special case: number is exactly 0
     if(set > 5 || set < -2)
